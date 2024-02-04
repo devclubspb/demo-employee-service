@@ -1,0 +1,18 @@
+### Create employee 1
+POST http://localhost:8082/api/employees
+Content-Type: application/json
+
+{
+  "name": "Employee 1"
+}
+
+### Create employee 2
+POST http://localhost:8082/api/employees
+Content-Type: application/json
+
+{
+  "name": "Employee 2"
+}
+
+### Get employees
+GET http://localhost:8082/api/employees
