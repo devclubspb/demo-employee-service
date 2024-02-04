@@ -6,6 +6,7 @@ import io.github.devclubspb.employee.payload.EmployeeRequest;
 import io.github.devclubspb.employee.payload.EmployeeResponse;
 import io.github.devclubspb.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,14 @@ public class EmployeeController {
         return employeeService.getAllEmployees().stream()
                 .map(this::mapDomain2Response)
                 .toList();
+    }
+
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<EmployeeResponse> getEmployee(@PathVariable Long employeeId) {
+        return employeeService.findEmployeeById(employeeId)
+                .map(this::mapDomain2Response)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     private EmployeeResponse mapDomain2Response(Employee domain) {

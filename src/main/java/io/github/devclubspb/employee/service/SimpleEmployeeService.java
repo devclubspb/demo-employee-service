@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,12 @@ public class SimpleEmployeeService implements EmployeeService {
         return employeeRepository.findAllSortedByName().stream()
                 .map(this::mapEntity2Domain)
                 .toList();
+    }
+
+    @Override
+    public Optional<Employee> findEmployeeById(Long employeeId) {
+        return employeeRepository.findById(employeeId)
+                .map(this::mapEntity2Domain);
     }
 
     private Employee mapEntity2Domain(EmployeeEntity entity) {
