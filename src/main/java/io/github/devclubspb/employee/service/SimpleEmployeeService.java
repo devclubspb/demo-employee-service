@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,13 @@ public class SimpleEmployeeService implements EmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAllSortedByName().stream()
+                .map(this::mapEntity2Domain)
+                .toList();
+    }
+
+    @Override
+    public List<Employee> findEmployeesByIds(Set<Long> ids) {
+        return employeeRepository.findAllByIds(ids).stream()
                 .map(this::mapEntity2Domain)
                 .toList();
     }

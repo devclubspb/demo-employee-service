@@ -7,9 +7,11 @@ import io.github.devclubspb.employee.payload.EmployeeResponse;
 import io.github.devclubspb.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +30,11 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<EmployeeResponse> getEmployees() {
-        return employeeService.getAllEmployees().stream()
+    public List<EmployeeResponse> getEmployees(@RequestParam(required = false) Set<Long> ids) {
+        List<Employee> employees = CollectionUtils.isEmpty(ids)
+                ? employeeService.getAllEmployees()
+                : employeeService.findEmployeesByIds(ids);
+        return employees.stream()
                 .map(this::mapDomain2Response)
                 .toList();
     }

@@ -17,5 +17,8 @@ Content-Type: application/json
 ### Get employees
 GET http://localhost:8082/api/employees
 
+### Get employees 1/2
+GET http://localhost:8082/api/employees?ids=1,2
+
 ### Get employee 1
 GET http://localhost:8082/api/employees/1
